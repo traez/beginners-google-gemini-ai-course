@@ -1,8 +1,32 @@
 @import "tailwindcss";
 
+/* 
+640px, 768px, 1024px, 1280px, 1536px (Tailwind Default - sm, md, lg, xl, 2xl)
+Add breakpoint  screens: {'xs': '480px'} and {'1xl': '1440px'},
+Design for 1440px max width, beyond background color.
+Design for 375px (320px) smallest width without scroll bar
+
+1280 X 593 my laptop default dimension
+1422 X 659 - 90%
+1600 X 742 - 80%
+
+Desktop: 1920×1080, 1366×768, 1536×864, 1280×720
+While there's no universally fixed "acceptable" max height, sticking to 400–700px (desktop) and 300–500px (mobile) ensures components remain scroll-free, readable, and user-friendly. Ultimately, always test your design across different devices to validate usability.
+*/
+
 :root {
   --background: #ffffff;
   --foreground: #171717;
+}
+
+@layer base {
+  * {
+    utline: 1px solid black;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    scroll-behavior: smooth;
+  }
 }
 
 @theme inline {
@@ -10,17 +34,36 @@
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+  --font-trebuchetMs: "Trebuchet MS";
+  --breakpoint-xs: 480px;
+  --breakpoint-1xl: 1440px;
+  --color-white-lilac: #faf4fc;
+  --color-silver-rust: #c3b9b7;
+  --color-pale-fedora: #816f7d;
+  --color-dark-bossanova: #47294c;
+  --color-black-purple: #010101;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
     --background: #0a0a0a;
     --foreground: #ededed;
+    --color-white-lilac: #faf4fc;
+    --color-silver-rust: #c3b9b7;
+    --color-pale-fedora: #816f7d;
+    --color-dark-bossanova: #47294c;
+    --color-black-purple: #010101;
   }
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+}
+
+code {
+  font-family: monospace;
+  background: #e0e0e0;
+  padding: 0.2em 0.4em;
+  border-radius: 4px;
 }
