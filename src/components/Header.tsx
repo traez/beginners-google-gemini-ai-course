@@ -13,17 +13,17 @@ export default function Header() {
       </menu>
       <aside className="flex justify-center items-center gap-2 md:gap-4">
         <Link
-          href="/create"
-          className="text-base font-semibold border-2 border-blue-900 px-2 py-1 rounded-md hover:bg-yellow-300 transition duration-300"
+          href="/prompt"
+          className="text-base font-semibold bg-dark-bossanova text-yellow-300 border-2 border-blue-900 px-2 py-1 rounded-md hover:bg-silver-rust hover:text-black transition duration-300"
         >
-          Create
+          Prompt
         </Link>
 
         <Link
-          href="/admin"
-          className="text-base font-semibold border-2 border-blue-900 px-2 py-1 rounded-md hover:bg-yellow-300 transition duration-300"
+          href="/chat"
+          className="text-base font-semibold bg-dark-bossanova text-yellow-300 border-2 border-blue-900 px-2 py-1 rounded-md hover:bg-silver-rust hover:text-black transition duration-300"
         >
-          Admin
+          Chat
         </Link>
       </aside>
     </nav>
