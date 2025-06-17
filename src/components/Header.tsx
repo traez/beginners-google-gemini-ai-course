@@ -25,6 +25,12 @@ export default function Header() {
         >
           Chat
         </Link>
+        <Link
+          href="/tokens"
+          className="text-base font-semibold bg-dark-bossanova text-yellow-300 border-2 border-blue-900 px-2 py-1 rounded-md hover:bg-silver-rust hover:text-black transition duration-300"
+        >
+          Tokens
+        </Link>
       </aside>
     </nav>
   );

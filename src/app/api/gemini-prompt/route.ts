@@ -1,4 +1,4 @@
-// /api/gemini/route.ts
+// /api/gemini-prompt/route.ts
 import { GoogleGenAI } from "@google/genai";
 import { NextResponse } from "next/server";
 
