@@ -20,7 +20,7 @@ const Prompt = () => {
     }
 
     try {
-      const response = await fetch("/api/gemini-prompt", {
+      const response = await fetch("/api/prompt", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

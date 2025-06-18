@@ -16,7 +16,7 @@ interface GeminiApiResponse {
       }>;
     };
   }>;
- /*   Other properties like usageMetadata, modelVersion, responseId are not strictly needed for just extracting text, but are part of the full response. */
+  /*   Other properties like usageMetadata, modelVersion, responseId are not strictly needed for just extracting text, but are part of the full response. */ 
 }
 
 const apiKey = process.env.GOOGLE_GEMINI_API_KEY;
@@ -60,7 +60,7 @@ export async function POST(req: Request): Promise<NextResponse> {
       config: {
         candidateCount: 1,
         stopSequences: ["\n\n"], // Changed to stop at the end of a paragraph
-        maxOutputTokens: 70, // Changed to a maximum of 70 tokens
+        maxOutputTokens: 100, 
         temperature: 1.0,
       },
     })) as GeminiApiResponse; // Assert the type of the result
