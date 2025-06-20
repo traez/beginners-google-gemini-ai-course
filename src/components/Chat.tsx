@@ -3,6 +3,7 @@
 import { useEffect, useState, useRef } from "react";
 import { useAppStore } from "@/store/StoreProvider";
 import { ChatMessage } from "@/store/slices/geminiSlice";
+import ReactMarkdown from "react-markdown";
 
 const Chat = () => {
   const {
@@ -48,12 +49,16 @@ const Chat = () => {
   };
 
   return (
-    <div className="flex flex-col h-auto bg-gray-100">
-      <header className="bg-blue-600 text-white p-4 text-center text-2xl font-bold">
-        <h1>Gemini AI Chat</h1>
-      </header>
+    <div className="container mx-auto mt-12 p-6 border border-gray-300 rounded-lg shadow-sm bg-white">
+      <h1 className="text-center text-2xl font-semibold text-gray-800 mb-6">
+        Gemini AI Chat
+      </h1>
 
-      <div className="flex-grow p-4 overflow-y-auto" ref={chatHistoryRef}>
+      {/* Chat History Container */}
+      <div
+        className="mb-6 p-5 bg-gray-50 border border-gray-200 rounded-md h-96 overflow-y-auto"
+        ref={chatHistoryRef}
+      >
         {chatHistory.length === 0 && (
           <p className="text-center text-gray-500 mt-10">
             Start a conversation with Gemini!
@@ -62,59 +67,79 @@ const Chat = () => {
         {chatHistory.map((msg: ChatMessage, index: number) => (
           <div
             key={index}
-            className={`mb-4 p-3 rounded-lg max-w-lg ${
+            className={`mb-4 p-3 rounded-lg max-w-[800px] ${
               msg.role === "user"
                 ? "bg-blue-500 text-white ml-auto"
-                : "bg-gray-300 text-gray-800 mr-auto"
+                : "bg-white text-gray-800 mr-auto border border-gray-200"
             }`}
           >
-            <strong>{msg.role === "user" ? "You" : "Gemini"}:</strong>{" "}
-            {msg.content}
+            <div className="font-medium text-sm mb-1">
+              {msg.role === "user" ? "You" : "Gemini"}
+            </div>
+            <div className="whitespace-pre-wrap leading-relaxed">
+              {msg.role === "user" ? (
+                msg.content
+              ) : (
+                <ReactMarkdown>{msg.content}</ReactMarkdown>
+              )}
+            </div>
           </div>
         ))}
         {isLoadingChat && (
-          <div className="mb-4 p-3 rounded-lg bg-gray-300 text-gray-800 mr-auto">
-            <strong>Gemini:</strong> Typing...
+          <div className="mb-4 p-3 rounded-lg bg-white text-gray-800 mr-auto border border-gray-200">
+            <div className="font-medium text-sm mb-1">Gemini</div>
+            <div className="text-gray-600">Thinking...</div>
           </div>
         )}
         {chatError && (
-          <div className="mb-4 p-3 rounded-lg bg-red-200 text-red-800 mr-auto">
-            <strong>Error:</strong> {chatError}
+          <div className="mb-4 p-3 rounded-lg bg-red-50 text-red-800 mr-auto border border-red-200">
+            <div className="font-medium text-sm mb-1">Error</div>
+            <div>{chatError}</div>
           </div>
         )}
       </div>
 
-      <form
-        onSubmit={handleSendMessage}
-        className="p-4 bg-white border-t border-gray-200 flex items-center gap-2"
-      >
-        <input
-          type="text"
+      {/* Message Input Form */}
+      <form onSubmit={handleSendMessage} className="flex flex-col gap-4">
+        <textarea
           value={currentMessage}
           onChange={(e) => setCurrentMessage(e.target.value)}
-          placeholder="Type your message..."
-          className="flex-grow p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+          placeholder="Type your message here..."
+          rows={3}
+          className="p-3 text-base rounded-md border border-gray-300 resize-y focus:outline-none focus:ring-2 focus:ring-blue-500"
           disabled={isLoadingChat}
+          onKeyDown={(e) => {
+            if (e.key === "Enter" && !e.shiftKey) {
+              e.preventDefault();
+              handleSendMessage(e);
+            }
+          }}
         />
-        <button
-          type="submit"
-          className={`py-3 px-6 rounded-lg text-white font-semibold ${
-            isLoadingChat || !currentMessage.trim()
-              ? "bg-gray-400 cursor-not-allowed"
-              : "bg-blue-600 hover:bg-blue-700"
-          }`}
-          disabled={isLoadingChat || !currentMessage.trim()}
-        >
-          Send
-        </button>
-        <button
-          type="button"
-          onClick={clearChat}
-          className="py-3 px-6 rounded-lg text-blue-600 border border-blue-600 hover:bg-blue-50"
-          disabled={isLoadingChat}
-        >
-          Clear Chat
-        </button>
+        <div className="flex gap-2">
+          <button
+            type="submit"
+            disabled={isLoadingChat || !currentMessage.trim()}
+            className={`flex-grow py-3 px-5 text-lg text-white rounded-md transition-colors ${
+              isLoadingChat || !currentMessage.trim()
+                ? "bg-gray-400 cursor-not-allowed"
+                : "bg-blue-600 hover:bg-blue-700"
+            }`}
+          >
+            {isLoadingChat ? "Sending..." : "Send Message"}
+          </button>
+          <button
+            type="button"
+            onClick={clearChat}
+            disabled={isLoadingChat}
+            className={`py-3 px-5 text-lg rounded-md border transition-colors ${
+              isLoadingChat
+                ? "border-gray-300 text-gray-400 cursor-not-allowed"
+                : "border-blue-600 text-blue-600 hover:bg-blue-50"
+            }`}
+          >
+            Clear Chat
+          </button>
+        </div>
       </form>
     </div>
   );

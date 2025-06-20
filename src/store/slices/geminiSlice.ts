@@ -29,7 +29,7 @@ export const createGeminiSlice: StateCreator<GeminiSliceType> = (set, get) => ({
       console.log("Attempting to create new session:", newSessionId);
 
       try {
-        const response = await fetch("/api/chat-create", {
+        const response = await fetch("/api/chat-session", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -62,7 +62,7 @@ export const createGeminiSlice: StateCreator<GeminiSliceType> = (set, get) => ({
       console.log("Existing session ID:", currentSessionId);
       // Verify the session still exists in the database
       try {
-        const response = await fetch("/api/chat-create", {
+        const response = await fetch("/api/chat-session", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -107,7 +107,7 @@ export const createGeminiSlice: StateCreator<GeminiSliceType> = (set, get) => ({
       }
 
       // Verify session exists by attempting to create it (will return 200 if exists)
-      const sessionVerification = await fetch("/api/chat-create", {
+      const sessionVerification = await fetch("/api/chat-session", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -235,11 +235,17 @@ export const createGeminiSlice: StateCreator<GeminiSliceType> = (set, get) => ({
   chatHistory: [],
   isLoadingChat: false,
   chatError: null,
-  clearChat: () =>
+  clearChat: () => {
     set({
       chatHistory: [],
       chatError: null,
       isLoadingChat: false,
       sessionId: null,
-    }),
+    });
+
+    // Reload the page after state has been cleared
+    if (typeof window !== "undefined") {
+      window.location.reload();
+    }
+  },
 });

@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import NextJsTopLoader from "@/lib/NextJsTopLoader";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import { Toaster } from "sonner";
+
 import "./globals.css";
 import { StoreProvider } from "@/store/StoreProvider";
 
@@ -25,7 +25,6 @@ export default function RootLayout({
           <main className="flex-grow h-full w-full">{children}</main>
           <Footer />
         </StoreProvider>
-        <Toaster position="top-center" />
       </body>
     </html>
   );
