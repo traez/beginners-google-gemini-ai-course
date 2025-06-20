@@ -78,7 +78,7 @@ export const createGeminiSlice: StateCreator<GeminiSliceType> = (set, get) => ({
           set({ sessionId: null });
           await get().initializeSession();
         }
-      } catch (error) {
+      } catch {
         console.warn(
           "Session verification failed, will create new session on next message"
         );
@@ -219,13 +219,17 @@ export const createGeminiSlice: StateCreator<GeminiSliceType> = (set, get) => ({
         isLoadingChat: false,
       }));
       return data.response;
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error("Error sending message:", error);
+      const errorMessage =
+        error instanceof Error
+          ? error.message
+          : "An unknown error occurred while sending message.";
       set((state) => ({
         chatHistory: state.chatHistory.filter(
           (msg) => !(msg.role === "user" && msg.content === message)
         ),
-        chatError: error.message,
+        chatError: errorMessage,
         isLoadingChat: false,
       }));
       return null;

@@ -102,9 +102,15 @@ export async function POST(req: Request): Promise<NextResponse> {
 
     // Send the generated text back to the frontend
     return NextResponse.json({ text: geminiResponseText }, { status: 200 });
-  } catch (error: any) {
+  } catch (error: unknown) {
+    // Changed 'any' to 'unknown'
     // Catch unexpected errors and log them
     console.error("Error in Gemini API route:", error);
+
+    // Add a type guard to safely access error properties
+    if (error instanceof Error) {
+      console.error("Error details:", error.message, error.stack);
+    }
 
     // Send a generic error message to the frontend
     return NextResponse.json(

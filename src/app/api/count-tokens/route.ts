@@ -68,8 +68,14 @@ export async function POST(req: Request): Promise<NextResponse> {
 
     // Return the total token count to the frontend
     return NextResponse.json({ totalTokens }, { status: 200 });
-  } catch (error: any) {
+  } catch (error: unknown) {
+    // Changed 'any' to 'unknown'
     console.error("Error in Gemini count-tokens API route:", error);
+
+    // It's good practice to log more details about the error if it's an Error instance
+    if (error instanceof Error) {
+      console.error("Error details:", error.message, error.stack);
+    }
 
     // Provide a generic, safe error message to the frontend
     return NextResponse.json(
@@ -80,4 +86,4 @@ export async function POST(req: Request): Promise<NextResponse> {
       { status: 500 }
     );
   }
-}
+    }

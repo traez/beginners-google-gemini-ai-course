@@ -94,10 +94,16 @@ export async function POST(req: Request): Promise<NextResponse> {
 
     // 5. Return Gemini's response to the client
     return NextResponse.json({ response: geminiResponseText }, { status: 200 });
-  } catch (error: any) {
+  } catch (error: unknown) {
+    // Changed 'any' to 'unknown'
     console.error("Error in chat message API route:", error);
     // Log the specific error message to help debug
-    console.error("Error details:", error.message, error.stack);
+    if (error instanceof Error) {
+      // Type guard to ensure 'error' is an Error object
+      console.error("Error details:", error.message, error.stack);
+    } else {
+      console.error("Error details: An unknown error occurred.");
+    }
     return NextResponse.json(
       {
         error:
@@ -106,4 +112,4 @@ export async function POST(req: Request): Promise<NextResponse> {
       { status: 500 }
     );
   }
-}
+  }

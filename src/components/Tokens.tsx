@@ -1,5 +1,5 @@
-"use client"; 
-import { useState } from "react"; 
+"use client";
+import { useState } from "react";
 
 const Tokens = () => {
   const [prompt, setPrompt] = useState<string>(""); // Stores the user's input text
@@ -43,13 +43,20 @@ const Tokens = () => {
 
       // Parse the successful JSON response
       const data = await response.json();
-      console.log(data)
+      console.log(data);
       setTokenCount(data.totalTokens);
-    } catch (err: any) {
+    } catch (err: unknown) {
+      // Changed 'any' to 'unknown'
       // Catch and log any errors that occur during the fetch operation
       console.error("Error fetching token count:", err);
+      let errorMessage = "Failed to count tokens. Please try again.";
+
+      // Type guard to safely access the 'message' property if 'err' is an Error object
+      if (err instanceof Error) {
+        errorMessage = err.message;
+      }
       // Set an error message for the user
-      setError(err.message || "Failed to count tokens. Please try again.");
+      setError(errorMessage);
     } finally {
       setLoading(false); // Always set loading to false after the operation completes
     }

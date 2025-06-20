@@ -38,11 +38,18 @@ const Prompt = () => {
 
       const data = await response.json();
       setGeminiResponse(data.text);
-    } catch (err: any) {
+    } catch (err: unknown) {
+      // Changed 'any' to 'unknown'
       console.error("Error fetching from Gemini API:", err);
-      setError(
-        err.message || "Failed to get a response from Gemini. Please try again."
-      );
+      let errorMessage =
+        "Failed to get a response from Gemini. Please try again.";
+
+      // Type guard to safely access the 'message' property if 'err' is an Error object
+      if (err instanceof Error) {
+        errorMessage = err.message;
+      }
+
+      setError(errorMessage);
     } finally {
       setLoading(false);
     }
@@ -80,7 +87,7 @@ const Prompt = () => {
       {geminiResponse && (
         <div className="mt-8 p-5 bg-gray-50 border border-gray-200 rounded-md">
           <h2 className="text-lg font-medium text-gray-700 mb-2">
-            Gemini's Response:
+            Gemini&apos;s Response:
           </h2>
           <div className="whitespace-pre-wrap leading-none text-gray-800 ">
             <ReactMarkdown>{geminiResponse}</ReactMarkdown>

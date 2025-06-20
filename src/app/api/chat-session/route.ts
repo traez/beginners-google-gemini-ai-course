@@ -62,9 +62,14 @@ export async function POST(req: Request): Promise<NextResponse> {
       { message: "Session created successfully." },
       { status: 201 } // Created
     );
-  } catch (error: any) {
+  } catch (error: unknown) {
+    // Changed 'any' to 'unknown'
     // Catch-all error handler — logs the error and returns a 500 response
     console.error("Error creating chat session:", error);
+    // You might want to log more specific error details if 'error' is an Error object
+    if (error instanceof Error) {
+      console.error("Error details:", error.message, error.stack);
+    }
     return NextResponse.json(
       {
         error:
@@ -73,4 +78,4 @@ export async function POST(req: Request): Promise<NextResponse> {
       { status: 500 } // Internal Server Error
     );
   }
-}
+ }

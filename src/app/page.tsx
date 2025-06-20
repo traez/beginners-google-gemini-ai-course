@@ -8,8 +8,8 @@ export default function Home() {
           Gemini-Powered Intelligence Tool
         </h1>
         <p className="mt-4 text-lg text-gray-600 dark:text-gray-300">
-          Explore business insights using Google's <code>gemini-2.0-flash</code>{" "}
-          model.
+          Explore business insights using Google&apos;s{" "}
+          <code>gemini-2.0-flash</code> model.
         </p>
         <p className="mt-4 text-lg dark:text-gray-300 font-bold text-blue-800">
           Features include AI chat, token counting, and real-time prompy content
