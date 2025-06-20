@@ -1,5 +1,6 @@
 "use client";
 import { useState } from "react";
+import ReactMarkdown from "react-markdown";
 
 const Prompt = () => {
   const [prompt, setPrompt] = useState<string>("");
@@ -48,7 +49,7 @@ const Prompt = () => {
   };
 
   return (
-    <div className="max-w-xl mx-auto mt-12 p-6 border border-gray-300 rounded-lg shadow-sm bg-white">
+    <div className="container mx-auto mt-12 p-6 border border-gray-300 rounded-lg shadow-sm bg-white">
       <h1 className="text-center text-2xl font-semibold text-gray-800 mb-6">
         Gemini AI Chat
       </h1>
@@ -81,9 +82,9 @@ const Prompt = () => {
           <h2 className="text-lg font-medium text-gray-700 mb-2">
             Gemini's Response:
           </h2>
-          <p className="whitespace-pre-wrap leading-relaxed text-gray-800">
-            {geminiResponse}
-          </p>
+          <div className="whitespace-pre-wrap leading-none text-gray-800 ">
+            <ReactMarkdown>{geminiResponse}</ReactMarkdown>
+          </div>
         </div>
       )}
     </div>

@@ -59,8 +59,8 @@ export async function POST(req: Request): Promise<NextResponse> {
       ...apiContents, // Spread the structured contents
       config: {
         candidateCount: 1,
-        stopSequences: ["\n\n"], // Changed to stop at the end of a paragraph
-        maxOutputTokens: 100, 
+        /* stopSequences: ["\n\n"], // Changed to stop at the end of a paragraph
+        maxOutputTokens: 200,  */
         temperature: 1.0,
       },
     })) as GeminiApiResponse; // Assert the type of the result
