@@ -56,7 +56,7 @@ const Chat = () => {
 
       {/* Chat History Container */}
       <div
-        className="mb-6 p-5 bg-gray-50 border border-gray-200 rounded-md h-96 overflow-y-auto"
+        className="mb-6 p-5 bg-gray-50 border border-gray-200 rounded-md h-auto overflow-y-auto"
         ref={chatHistoryRef}
       >
         {chatHistory.length === 0 && (

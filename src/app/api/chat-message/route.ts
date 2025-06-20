@@ -1,3 +1,4 @@
+// src/app/api/chat-message/route.ts
 import { GoogleGenAI } from "@google/genai";
 import { NextResponse } from "next/server";
 import { db } from "@/db/index"; // Your Drizzle DB client
